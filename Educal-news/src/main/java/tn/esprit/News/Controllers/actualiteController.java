@@ -12,36 +12,37 @@ import java.util.Set;
 @CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
+@RequestMapping("/news")
 public class actualiteController {
     IActualiteService actualiteService;
 
-    @PostMapping("/dashboard/actualites/addActualite")
+    @PostMapping("/addActualite")
     Actualite addActualite(@RequestBody Actualite actualite){
         return actualiteService.addActualite(actualite);
     }
 
-    @GetMapping("/dashboard/actualites/getOneActualite/{id}")
+    @GetMapping("/getOneActualite/{id}")
     Actualite getActualite(@PathVariable Long id){
         return actualiteService.getActualite(id);
     }
 
-    @GetMapping("/dashboard/actualites")
+    @GetMapping
     List<Actualite> getAllActualites(){
         return actualiteService.getAllActualites();
     }
 
-    @DeleteMapping("/dashboard/actualites/deleteActualite/{id}")
+    @DeleteMapping("/deleteActualite/{id}")
     void deleteClubById(@PathVariable Long id){
         this.actualiteService.deleteActualiteById(id);
     }
 
-    @PutMapping("/dashboard/actualites/updateActualite")
+    @PutMapping("/updateActualite")
     Actualite updateActualite(@RequestBody Actualite actualite){
         return  this.actualiteService.updateActualite(actualite);
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
-    @PostMapping("/dashboard/actualites/uploadImage/{id}")
+    @PostMapping("/uploadImage/{id}")
     public Actualite handleImageFileUpload(@RequestParam("fileImage") MultipartFile fileImage, @PathVariable long id) {
         return actualiteService.handleImageFileUpload(fileImage,id);
     }
@@ -49,7 +50,7 @@ public class actualiteController {
 
     /*****************************************/
 
-    @PostMapping("/news/shareFb/{id}")
+    @PostMapping("/shareFb/{id}")
     public String shareFb(@PathVariable Long id){
         return actualiteService.shareFb(id);
     }
