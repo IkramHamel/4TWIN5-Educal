@@ -1,0 +1,149 @@
+version: "3.9"
+services:
+  universite:
+    build: .\Universite
+    image: "universite-img"
+    container_name: universite
+    ports:
+      - "8084:8084"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/universite?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    restart: unless-stopped
+    depends_on:
+      - eureka
+      - mysql-db
+  foyer:
+    build: .\Foyer
+    image: "foyer-img"
+    container_name: foyer
+    ports:
+      - "8081:8081"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery:8761/eureka
+      
+    restart: unless-stopped
+    depends_on:
+      - eureka
+  restaurant:
+    build: .\Foyer
+    image: "restaurant-img"
+    container_name: restaurant
+    ports:
+      - "8090:8090"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery:8761/eureka
+  
+    restart: unless-stopped
+    depends_on:
+      - eureka
+  chambre:
+    build: .\GestionChambre
+    image: "chambre-img"
+    container_name: chambre
+    ports:
+      - "8091:8091"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery:8761/eureka
+   
+    restart: unless-stopped
+    depends_on:
+      - eureka
+  club-node:
+    build:
+      context: .\MS_club
+      dockerfile: dockerfile
+    image: "club-img"
+    container_name: "club"
+    ports:
+      - "3000:3000"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery:8761/eureka/
+    restart: unless-stopped
+    depends_on:
+      - eureka
+      
+  event:
+    build: .\Event-MS
+    image: "event-img"
+    container_name: event
+    ports:
+      - "8087:8087"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/event?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    restart: unless-stopped
+    depends_on:
+      - eureka
+      - mysql-db
+  specialite:
+    build: .\MS_specialite
+    image: "specialite-img"
+    container_name: specialite
+    ports:
+      - "8083:8083"
+    volumes:
+      - ./MS_specialite/upload-directory:/app/upload-directory
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/MS-Specialite?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    restart: unless-s
+    depends_on:
+      - eureka
+      - mysql-db
+  news:
+    build: .\Educal-news
+    image: news
+    container_name: news
+    ports:
+      - "8085:8085"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/educal_news?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    restart: unless-stopped
+    depends_on:
+      - eureka
+      - mysql-db
+  
+  eureka:
+    build: .\EurekaD
+    image: "eureka-img"
+    container_name: "eureka"
+    ports:
+      - "8761:8761"
+    hostname: discovery
+
+  gateway:
+    build: .\ApiGateway
+    image: "gateway-img"
+    container_name: "gateway"
+    ports:
+      - "8082:8082"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery:8761/eureka
+      - spring_cloud_gateway_routes[0]_id=universite
+      - spring_cloud_gateway_routes[0]_uri=http://universite:8084
+      - spring_cloud_gateway_routes[0]_predicates[0]=Path=/universite/**
+    depends_on:
+      - universite
+  mysql-db:
+    # build: "mysql:5.6"
+    image: "mysql:5.6"
+    container_name: "mysql-db"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root #indisponsable pour la conteneurisation
+      #- MYSQL_DATABASE=job
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+    # hostname: mysql-host ya host name ya nesta3mel container name
+
+  
