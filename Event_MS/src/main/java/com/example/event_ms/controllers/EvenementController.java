@@ -2,10 +2,13 @@ package com.example.event_ms.controllers;
 
 
 import com.example.event_ms.entities.Evenement;
+import com.example.event_ms.repositories.EvenementRepository;
+import com.example.event_ms.services.EvenementService;
 import com.example.event_ms.services.FileStorageService;
 import com.example.event_ms.services.IEvenementService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,12 +21,13 @@ public class EvenementController {
     IEvenementService eventService;
     @Autowired
     FileStorageService fileStorageService ;
-    @PostMapping("/addEvent")
-    Evenement addEvent (@ModelAttribute Evenement evenement, @RequestParam(value = "file",required = false) MultipartFile imageFile){
-        String imageUrl = fileStorageService.storeFile(imageFile);
-        evenement.setImageEvent(imageUrl);
+    EvenementRepository evenementRepository ;
 
-        return eventService.addEvent(evenement,imageFile);
+    EvenementService evenementService ;
+
+    @PostMapping("/addEvent")
+    Evenement addEvent(@RequestBody Evenement event){
+        return eventService.addEvent(event);
     }
 
     @GetMapping("/getOneEvent/{id}")
@@ -41,20 +45,16 @@ public class EvenementController {
         this.eventService.deleteEvent(id);
     }
 
-    @PatchMapping("/updateEvent")
-    public Evenement updateEvent(@ModelAttribute Evenement evenement, @RequestParam(value = "file", required = false) MultipartFile imageFile) {
-        if (imageFile != null){
-            String image = fileStorageService.storeFile(imageFile);
-            evenement.setImageEvent(image); }
-        if (imageFile == null){
-            evenement.setImageEvent(evenement.getImageEvent()); }
-        return eventService.updateEvent(evenement,imageFile);
+    @PutMapping("/updateEvent/{id}")
+    Evenement updateEvent(@RequestBody Evenement event,@PathVariable Long id){
+        return  this.eventService.updateEvent(event,id);
     }
 
-
-    @PostMapping("/events/shareFb/{id}")
-    public String shareFb(@PathVariable Long id){
-        return eventService.shareFb(id);
+    @CrossOrigin(origins = "*", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
+    @PostMapping("/events/uploadImage/{id}")
+    public Evenement handleImageFileUpload(@RequestParam("fileImage") MultipartFile fileImage, @PathVariable long id) {
+        return eventService.handleImageFileUpload(fileImage,id);
     }
+
 
 }

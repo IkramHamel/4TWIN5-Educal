@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface IEvenementService {
-    Evenement addEvent(Evenement event , MultipartFile imageFile);
+    Evenement addEvent(Evenement event);
 
     Evenement getEvent(Long idEvent);
 
@@ -14,10 +14,8 @@ public interface IEvenementService {
 
     void deleteEvent(Long idEvent);
 
-    Evenement updateEvent(Evenement event, MultipartFile imageFile);
+    Evenement updateEvent(Evenement event, Long id);
 
     Evenement handleImageFileUpload(MultipartFile fileImage, long id);
-
-    String shareFb(Long id);
 }
 
