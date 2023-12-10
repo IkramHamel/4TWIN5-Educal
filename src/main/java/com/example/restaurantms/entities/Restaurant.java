@@ -21,22 +21,21 @@ import java.util.Set;
 @AllArgsConstructor
 public class Restaurant implements Serializable {
 
-   // private static final long serialVersionUID = 795450928237931201L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String nomRestaurant, menu;
-    private Date dateOuverture, dateFermeture;
+    private String imageUrl;
+    private String specialite;
 
-
-    public Restaurant(String nomRestaurant, String menu, Date dateOuverture, Date dateFermeture) {
+    public Restaurant(String nomRestaurant, String menu, String imageUrl,String specialite) {
         super();
-        this.dateFermeture = dateFermeture;
-        this.dateFermeture = dateFermeture;
         this.nomRestaurant = nomRestaurant;
         this.menu = menu;
+        this.imageUrl=imageUrl;
+        this.specialite=specialite;
     }
 
 }
