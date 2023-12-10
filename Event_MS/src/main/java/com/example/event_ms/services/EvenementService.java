@@ -43,7 +43,7 @@ public class EvenementService implements IEvenementService {
     }
 
     @Override
-    public Evenement updateEvent(Evenement event,  Long id){
+    public Evenement updateEvent(Evenement event){
         Evenement oldEvent = evenementRepository.findById(event.getIdEvent()).orElse(null);
         event.setImageEvent(oldEvent.getImageEvent());
         return evenementRepository.save(event);
@@ -58,5 +58,13 @@ public class EvenementService implements IEvenementService {
         event.setImageEvent(fileName);
         return evenementRepository.save(event);
     }
+    @Override
+    public List<Evenement> getAllEventsSortedByDateAsc() {
+        return evenementRepository.findAllByOrderByDateDebEventAsc();
+    }
 
+    @Override
+    public List<Evenement> getAllEventsSortedByDateDesc() {
+        return evenementRepository.findAllByOrderByDateDebEventDesc();
+    }
 }

@@ -6,6 +6,8 @@ services:
     container_name: universite
     ports:
       - "8084:8084"
+    volumes:
+      - ./Universite/upload-directory:/app/upload-directory
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery:8761/eureka
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/universite?createDatabaseIfNotExist=true
@@ -71,6 +73,8 @@ services:
     container_name: event
     ports:
       - "8087:8087"
+    volumes:
+      - ./Event-MS/upload-directory:/app/upload-directory
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery:8761/eureka
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/event?createDatabaseIfNotExist=true
@@ -93,7 +97,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/MS-Specialite?createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
-    restart: unless-s
+    restart: unless-stopped
     depends_on:
       - eureka
       - mysql-db

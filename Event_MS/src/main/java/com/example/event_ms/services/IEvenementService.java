@@ -14,8 +14,13 @@ public interface IEvenementService {
 
     void deleteEvent(Long idEvent);
 
-    Evenement updateEvent(Evenement event, Long id);
+    Evenement updateEvent(Evenement event);
 
     Evenement handleImageFileUpload(MultipartFile fileImage, long id);
+
+    List<Evenement> getAllEventsSortedByDateAsc();
+
+    List<Evenement> getAllEventsSortedByDateDesc();
+
 }
 
