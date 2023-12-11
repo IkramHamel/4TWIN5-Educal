@@ -2,8 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const clubRoutes = require("./routes/clubRoutes");
-
 const eurekaHelper = require("./eureka-helper");
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,6 +19,10 @@ mongoose.connect(
   }
 );
 
+app.use(
+  "/upload-directory",
+  express.static(path.join(process.cwd(), "upload-directory"))
+);
 app.use("/clubs", clubRoutes);
 
 // Register with Eureka
@@ -53,4 +57,4 @@ app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-eurekaHelper.registerWithEureka("club", PORT);
+eurekaHelper.registerWithEureka("club-MS", PORT);
