@@ -26,6 +26,6 @@ import java.io.Serializable;
 
         @Enumerated(EnumType.STRING)
         TypeChambre typeChambre;
-        //String imageUrl;
+        String imageUrl;
 
     }
