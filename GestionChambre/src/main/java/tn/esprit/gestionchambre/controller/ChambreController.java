@@ -20,7 +20,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("Chambre")
+@RequestMapping("/Chambre")
 public class ChambreController {
     IChambreService chambreService;
     FileStorageService fileStorageService;
