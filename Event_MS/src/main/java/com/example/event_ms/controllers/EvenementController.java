@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/event")
 @AllArgsConstructor
 
@@ -54,7 +54,7 @@ public class EvenementController {
         return  this.eventService.updateEvent(event);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
+  @CrossOrigin(origins = "*", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
     @PostMapping("/events/uploadImage/{id}")
     public Evenement handleImageFileUpload(@RequestParam("fileImage") MultipartFile fileImage, @PathVariable long id) {
         return eventService.handleImageFileUpload(fileImage,id);

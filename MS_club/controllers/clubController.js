@@ -32,6 +32,7 @@ exports.getAllClubs = async (req, res) => {
 
 exports.createClub = async (req, res) => {
   try {
+    req.body.imageClub = "specDefaultImg.png"
     const club = new Club(req.body);
     await club.save();
     res.status(201).json(club);
@@ -54,7 +55,8 @@ exports.getClubById = async (req, res) => {
 
 exports.updateClub = async (req, res) => {
   try {
-    const club = await Club.findByIdAndUpdate(req.params.id, req.body, {
+    const { imageClub, ...updatedFields } = req.body;
+    const club = await Club.findByIdAndUpdate(req.body._id, updatedFields, {
       new: true,
     });
     if (!club) {
@@ -121,7 +123,7 @@ exports.uploadImage = async (req, res) => {
     const fileName = path.basename(req.file.path);
 
     // Update the image field with the file name
-    club.image = fileName;
+    club.imageClub = fileName;
 
     await club.save();
 

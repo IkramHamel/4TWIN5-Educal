@@ -9,7 +9,7 @@ import tn.esprit.News.Services.IActualiteService;
 import java.util.List;
 import java.util.Set;
 
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/news")
@@ -41,7 +41,7 @@ public class actualiteController {
         return  this.actualiteService.updateActualite(actualite);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
+//    @CrossOrigin(origins = "*", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
     @PostMapping("/uploadImage/{id}")
     public Actualite handleImageFileUpload(@RequestParam("fileImage") MultipartFile fileImage, @PathVariable long id) {
         return actualiteService.handleImageFileUpload(fileImage,id);

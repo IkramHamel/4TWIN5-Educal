@@ -1,4 +1,4 @@
-package com.example.event_ms.config;
+package tn.esprit.specialiteMS.configs;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

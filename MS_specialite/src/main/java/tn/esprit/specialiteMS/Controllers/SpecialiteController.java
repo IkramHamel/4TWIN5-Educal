@@ -9,11 +9,10 @@ import tn.esprit.specialiteMS.entities.Specialite;
 
 import java.util.List;
 
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/specialites")
-@CrossOrigin(origins = "*")
 public class SpecialiteController {
     SpecialiteService specialiteService;
     FileStorageService fileStorageService;
@@ -43,13 +42,13 @@ public class SpecialiteController {
         specialiteService.delete(id);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
+    @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
     @PostMapping("/uploadPdf/{id}")
     public Specialite handlePlanEtudeFileUpload(@RequestParam("file") MultipartFile file,@PathVariable long id) {
         return specialiteService.handlePlanEtudeFileUpload(file,id);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
+    @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
     @PostMapping("/uploadImage/{id}")
     public Specialite handleImageFileUpload(@RequestParam("fileImage") MultipartFile fileImage,@PathVariable long id) {
         return specialiteService.handleImageFileUpload(fileImage,id);

@@ -24,14 +24,17 @@ public class Foyer implements Serializable {
     private long idFoyer;
     private String nomFoyer;
     private long capacityFoyer;
+    private String imageFoyer;
+
 
     public Foyer() {
     }
 
-    public Foyer(long idFoyer, String nomFoyer, long capacityFoyer) {
+    public Foyer(long idFoyer, String nomFoyer, long capacityFoyer,String imageFoyer) {
         this.idFoyer = idFoyer;
         this.nomFoyer = nomFoyer;
         this.capacityFoyer = capacityFoyer;
+        this.imageFoyer = imageFoyer;
     }
 
     public long getIdFoyer() {
@@ -55,6 +58,11 @@ public class Foyer implements Serializable {
         this.capacityFoyer = capacityFoyer;
     }
 
+    public String getImageFoyer() {
+        return imageFoyer;
+    }
 
-
+    public void setImageFoyer(String imageFoyer) {
+        this.imageFoyer = imageFoyer;
+    }
 }

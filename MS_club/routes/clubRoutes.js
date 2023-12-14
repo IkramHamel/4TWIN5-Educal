@@ -19,7 +19,7 @@ router.get("/", clubController.getAllClubs);
 router.post("/", clubController.createClub);
 router.post(
   "/uploadImage/:id",
-  upload.single("image"),
+  upload.single("fileImage"),
   clubController.uploadImage
 );
 
@@ -30,7 +30,7 @@ router.post(
 // );
 
 router.get("/:id", clubController.getClubById);
-router.put("/:id", clubController.updateClub);
+router.put("/", clubController.updateClub);
 router.delete("/:id", clubController.deleteClub);
 
 module.exports = router;

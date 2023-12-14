@@ -1,4 +1,4 @@
-package com.example.event_ms.config;
+package com.example.restaurantms.configs;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
